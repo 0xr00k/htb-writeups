@@ -31,8 +31,6 @@ there was a comment leaving a hidden directory wide open:
 <!-- /nibbleblog/ directory. Nothing interesting here! -->
 ```
 
-![source comment](screenshots/source-comment.png)
-
 Lesson one for the night: always read the source.
 
 Went to `/nibbleblog/` and it's a Nibbleblog CMS. The README gave me the version,
@@ -44,7 +42,6 @@ bug, CVE-2015-6967. So the plan was clear, I just needed admin creds first.
 The login is at `/nibbleblog/admin.php`, and the creds were weak. `admin` /
 `nibbles`, basically the box name.
 
-![admin login](screenshots/admin-login.png)
 
 Once in, the upload bug lives in the "My image" plugin. Instead of a picture I
 uploaded a PHP reverse shell:
@@ -121,14 +118,6 @@ One last snag: running `sudo monitor.sh` with just the filename failed with a
 "no tty" error. The sudo rule only allows the exact full path, so you have to
 call it as `/home/nibbler/personal/stuff/monitor.sh`. Small thing, but it stops
 you cold if you don't catch it.
-
-## What I'd tell the client
-
-| # | Issue | Severity | Fix |
-|---|---|---|---|
-| 1 | Outdated Nibbleblog 4.0.3, file upload to RCE (CVE-2015-6967) | Critical | Patch the CMS, restrict upload types, add a WAF |
-| 2 | Weak admin password (`admin:nibbles`) | High | Strong unique passwords, enable MFA |
-| 3 | User-writable script runs as root via sudo | Critical | Make the script root-owned and non-writable, tighten sudoers |
 
 ## Takeaways
 
